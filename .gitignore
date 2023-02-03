@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+input_files/
+structured_files/
+*.fasta
+iav_h3n2/
+ibv_vic/
