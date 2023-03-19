@@ -1,8 +1,22 @@
 from Bio import SeqIO
-import re, os
+import re, os, pandas as pd
+import textwrap
+import sqlite3
 
 encoding = 'utf-8' 
 directory = os.fsencode("input_files")
+sqliteConnection = sqlite3.connect('fastaSeq.db')
+
+def GetCities():
+    cities = dict()
+    csv_cities = pd.read_csv("worldcities.csv")
+
+    # record = SeqIO.parse("structured_files/iav_h3n2/HA.fasta", "fasta")
+    # print(record.id[:record.id.index("/")])
+    # print(csv_cities.loc[csv_cities['city'] == 'Tokyo']['country'])
+
+
+
 
 def StructureQualifier():
     for file in os.listdir(directory):
@@ -38,5 +52,19 @@ def StructureQualifier():
         for key in records:
             with open(f'structured_files/{foldername}/{key}.fasta','w+') as f:
                 for id in records[key]:
-                    f.write(f'>{id}\n{records[key][id]}\n')
+                    seq = textwrap.fill(str(records[key][id]), width=100)
+                    f.write(f'>{id}\n{seq}\n')
+        
+        # if not os.path.exists(f"structured_files_temp/{foldername}"):
+        #     os.makedirs(f"structured_files_temp/{foldername}")
 
+        # for key in records:
+        #     with open(f'structured_files_temp/{foldername}/{key}.fasta','w+') as f:
+        #         for id in records[key]:
+        #             SeqIO.write(records[key][id], f, "fasta")
+
+# def Temp():
+    
+
+# GetCities()
+# StructureQualifier()
